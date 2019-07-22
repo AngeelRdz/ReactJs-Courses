@@ -10,7 +10,13 @@ class Hello extends Component {
 
 class Text extends Component {
   render() {
-    const { boolean, arrayOfNumbers, multiply, objectWithInfo, title } = this.props;
+    const {
+      boolean,
+      arrayOfNumbers,
+      multiply,
+      objectWithInfo,
+      title
+    } = this.props;
 
     const textSegundoBool = boolean ? "Cierto" : "Falso";
     const mappedNumbers = arrayOfNumbers.map(n => n * 2);
@@ -32,6 +38,44 @@ class Text extends Component {
   }
 }
 
+class Title extends Component {
+  render() {
+    return <p>{this.props.text}</p>;
+  }
+}
+
+Title.defaultProps = {
+  text: "Título por defecto"
+};
+
+class Contador extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { contador: this.props.contadorInicial };
+    setInterval(() => {
+      this.setState({ contador: this.state.contador + 1 });
+    }, 1000);
+  }
+  render() {
+    return (
+      <div>
+        <span>{this.state.contador}</span><br/><br/>
+        <ContadorNumero numero={this.state.contador} />
+      </div>
+    );
+  }
+}
+
+Contador.defaultProps = {
+  contadorInicial: 0
+};
+
+class ContadorNumero extends Component {
+  render() {
+    return <span>{this.props.numero}</span>;
+  }
+}
+
 function App() {
   return (
     <div className="App">
@@ -47,6 +91,8 @@ function App() {
           text="Texto: "
           title={<h1>Este es el titulo</h1>}
         />
+        <Title />
+        <Contador />
       </header>
     </div>
   );
